@@ -5,7 +5,11 @@ import (
 	"io"
     "html/template"
     "net/http"
+    "flag"
 )
+
+// Command-line flags.
+var httpAddr = flag.String("http", ":8080", "Listen address")
 
 var words []string
 
@@ -57,6 +61,7 @@ func aggregateWords(words []string) string {
 }
 
 func main() {
+	flag.Parse()
 	http.HandleFunc("/", sentence)
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(*httpAddr, nil)
 }
